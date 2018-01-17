@@ -9,7 +9,7 @@ class Box extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return this.props.boxClass === nextProps.boxClass;
+    return this.props.boxClass !== nextProps.boxClass;
   }
 
   render() {
@@ -24,6 +24,11 @@ class Box extends React.Component {
 }
 
 class Grid extends React.Component {
+
+  componentShouldUpdate(nextState, nextProps) {
+    return false;
+  }
+  
   render() {
     const width = this.props.cols * 14;
     var rowsArr = []
