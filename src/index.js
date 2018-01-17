@@ -8,6 +8,10 @@ class Box extends React.Component {
     this.props.selectBox(this.props.row, this.props.col);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.props.boxClass === nextProps.boxClass;
+  }
+
   render() {
     return (
       <div
@@ -18,9 +22,10 @@ class Box extends React.Component {
     );
   }
 }
+
 class Grid extends React.Component {
   render() {
-    const width = this.props.cols * 16;
+    const width = this.props.cols * 14;
     var rowsArr = []
 
     var boxClass = "";
@@ -53,6 +58,10 @@ class Buttons extends React.Component {
 
   handleSelect = (evt) => {
     this.props.gridSize(evt);
+  }
+
+  shouldComponentUpdate(nextState, nextProps) {
+    return false;
   }
 
   render() {
@@ -138,6 +147,44 @@ class Main extends React.Component {
     clearInterval(this.intervalId);
   }
 
+  slow = () => {
+    this.speed = 1000;
+    this.playButton();
+  }
+
+  fast = () => {
+    this.speed = 100;
+    this.playButton();
+  }
+
+  clear = () => {
+    var grid = Array(this.rows).fill().map(() => Array(this.cols).fill(false));
+    
+    this.setState({
+      gridFull: grid,
+      generation: 0
+    })
+
+    this.pauseButton();
+  }
+
+  gridSize = (size) => {
+    switch (size) {
+      case "1":
+        this.cols = 20;
+        this.rows = 10;
+        break;
+      case "2":
+        this.cols = 50;
+        this.rows = 30;
+        break;
+      case "3":
+        this.cols = 70;
+        this.rows = 50; 
+    }
+    this.clear();
+  }
+
   play = () => {
     let g = this.state.gridFull;
     let g2 = arrayClone(this.state.gridFull);
@@ -145,17 +192,19 @@ class Main extends React.Component {
     for(let i = 0; i < this.rows; i++) {
       for(let j = 0; j < this.cols; j++) {
         let count = 0;
-        if(i > 0) if (g[i-1][j]) count++;
-        if(i > 0 && j > 0) if (g[i-1][j-1]) count++;
-        if(i > 0 && j < this.cols -1) if (g[i-1][j+1]) count++;
-        if(j < this.cols-1) if (g[i][j+1]) count++;
-        if(j > 0) if (g[i][j-1]) count++;
-        if(i < this.rows - 1) if(g[i+1][j]) count++;
-        if(i < this.rows - 1 && j > 0) if (g[i+1][j-1]) count++;
-        if(i < this.rows - 1 && this.cols - 1) if(g[i+1][j+1]) count++;
+        if(i > 0 && g[i-1][j]) count++;
+        if(i > 0 && j > 0 && g[i-1][j-1]) count++;
+        if(i > 0 && j < this.cols -1 && g[i-1][j+1]) count++;
+        if(j < this.cols-1 && g[i][j+1]) count++;
+        if(j > 0 && g[i][j-1]) count++;
+        if(i < this.rows - 1 && g[i+1][j]) count++;
+        if(i < this.rows - 1 && j > 0 && g[i+1][j-1]) count++;
+        if(i < this.rows - 1 && j < this.cols - 1 && g[i+1][j+1]) count++;
         
-        if(g[i][j] && (count < 2 || count > 3)) g2[i][j] = false;
-        if(!g[i][j] && count === 3) g2[i][j] = true;
+        if(g[i][j] && (count < 2 || count > 3)) 
+          g2[i][j] = false;
+        else if(!g[i][j] && count === 3) 
+          g2[i][j] = true;
       }
     }
     this.setState({
@@ -195,7 +244,7 @@ class Main extends React.Component {
 }
 
 function arrayClone(arr) {
-  return JSON.parse(JSON.stringify(arr));
+  return arr.map(array => array.slice());
 }
 
 ReactDOM.render(<Main/>, document.getElementById('root'));
