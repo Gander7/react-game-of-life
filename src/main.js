@@ -16,7 +16,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({width: 900, height: 700});
 
     // and load the index.html of the app.
-    mainWindow.loadURL('http://localhost:3000');
+    mainWindow.loadURL('https://safe-peak-27883.herokuapp.com/');
 
     // Open the DevTools.
     //mainWindow.webContents.openDevTools();
