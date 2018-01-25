@@ -3,19 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { ButtonToolbar, MenuItem, DropdownButton } from 'react-bootstrap';
 
-if (process.env.NODE_ENV !== 'production') {
-  const {whyDidYouUpdate} = require('why-did-you-update');
-  whyDidYouUpdate(React);
-}
-
 class Box extends React.PureComponent {
   selectBox = () => {
     this.props.selectBox(this.props.row, this.props.col);
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return this.props.boxClass !== nextProps.boxClass;
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.props.boxClass !== nextProps.boxClass;
+  }
 
   render() {
     return (
@@ -28,7 +23,7 @@ class Box extends React.PureComponent {
   }
 }
 
-class Grid extends React.Component {
+class Grid extends React.PureComponent {
   
   render() {
     const width = this.props.cols * 14;
@@ -60,14 +55,10 @@ class Grid extends React.Component {
   }
 }
 
-class Buttons extends React.Component {
+class Buttons extends React.PureComponent {
 
   handleSelect = (evt) => {
     this.props.gridSize(evt);
-  }
-
-  shouldComponentUpdate(nextState, nextProps) {
-    return false;
   }
 
   render() {
