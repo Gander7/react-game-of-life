@@ -39,9 +39,6 @@ Contributions are what make the open source community such an amazing place to b
 This project has no iterations/deadlines and development may be fast, slow, or non-existent.
 This road map is not final and subject to changes at any time, because I might feel like it. :)
 
-### 1.0.1
-* Security vulnerabilities fixed.
-
 ### 1.1.1
 * Bugs ironed out
 
