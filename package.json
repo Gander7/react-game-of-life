@@ -1,16 +1,16 @@
 {
   "name": "gameoflife",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "dependencies": {
-    "eslint-plugin-flowtype": "^2.41.0",
+    "eslint-plugin-flowtype": "^3.13.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "^3.0.1"
+    "react-scripts": "^3.3.0"
   },
   "main": "src/main.js",
   "scripts": {
